@@ -5,6 +5,7 @@ import LocalSearch from "@/components/search/LocalSearch";
 import { Button } from "@/components/ui/button";
 import ROUTES from "@/constants/routes";
 import QuestionCard from "@/components/cards/QuestionCard";
+import handleError from "@/lib/handlers/error";
 
 const questions = [
   {
@@ -15,7 +16,7 @@ const questions = [
       { _id: "1", name: "React" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe", image: '/icons/like.svg' },
+    author: { _id: "1", name: "John Doe", image: "/icons/like.svg" },
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -29,7 +30,7 @@ const questions = [
       { _id: "1", name: "JavaScript" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe", image: '/icons/like.svg' },
+    author: { _id: "1", name: "John Doe", image: "/icons/like.svg" },
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -77,7 +78,7 @@ const Home = async ({ searchParams }: SearchParams) => {
       <HomeFilter />
       <div className="mt-10 flex w-full flex-col gap-6">
         {filteredQuestions.map((question) => (
-          <QuestionCard key={question._id} question={question}/>
+          <QuestionCard key={question._id} question={question} />
         ))}
       </div>
     </>
