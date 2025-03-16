@@ -7,6 +7,7 @@ import ROUTES from "@/constants/routes";
 import QuestionCard from "@/components/cards/QuestionCard";
 import handleError from "@/lib/handlers/error";
 import { api } from "@/lib/api";
+import { auth } from "@/auth";
 
 const questions = [
   {
@@ -54,8 +55,8 @@ interface SearchParams {
 const Home = async ({ searchParams }: SearchParams) => {
   const { query = "", filter = "" } = await searchParams;
 
-  const result = await test();
-  console.log(result);
+  const session = await auth();
+  console.log(session);
 
   const filteredQuestions = questions.filter((question) => {
     const matchesQuery = question.title
