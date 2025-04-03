@@ -18,7 +18,7 @@ const questions = [
       { _id: "1", name: "React" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe", image: "/icons/like.svg" },
+    author: { _id: "1", name: "John Doe", image: "/icons/like.svg" }, // Ensure this is a valid URL
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -32,7 +32,7 @@ const questions = [
       { _id: "1", name: "JavaScript" },
       { _id: "2", name: "JavaScript" },
     ],
-    author: { _id: "1", name: "John Doe", image: "/icons/like.svg" },
+    author: { _id: "1", name: "John Doe", image: "/icons/like.svg" }, // Ensure this is a valid URL
     upvotes: 10,
     answers: 5,
     views: 100,
@@ -55,9 +55,6 @@ interface SearchParams {
 const Home = async ({ searchParams }: SearchParams) => {
   const { query = "", filter = "" } = await searchParams;
 
-  const session = await auth();
-  console.log(session);
-
   const filteredQuestions = questions.filter((question) => {
     const matchesQuery = question.title
       .toLowerCase()
@@ -65,6 +62,13 @@ const Home = async ({ searchParams }: SearchParams) => {
     const matchesFilter = filter
       ? question.tags[0].name.toLowerCase() === filter.toLowerCase()
       : true;
+
+    // Validate image URL
+    if (!question.author.image || typeof question.author.image !== "string") {
+      console.warn(`Invalid image URL for question: ${question._id}`);
+      return false;
+    }
+
     return matchesQuery && matchesFilter;
   });
 
