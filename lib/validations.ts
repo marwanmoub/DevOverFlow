@@ -70,6 +70,10 @@ export const AskQuestionSchema = z.object({
     .max(3, { message: "Cannot add more than 3 tags." }),
 });
 
+export const EditQuestionSchema = AskQuestionSchema.extend({
+  questionId: z.string().min(1, { message: "Question ID is required." }),
+});
+
 export const UserSchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   username: z
@@ -125,4 +129,8 @@ export const SignInWithOAuthSchema = z.object({
     email: z.string().email({ message: "Invalid email address." }),
     image: z.string().url({ message: "Invalid URL." }).optional(),
   }),
+});
+
+export const GetQuestionSchema = z.object({
+  questionId: z.string().min(1, { message: "Question Id is required" }),
 });
