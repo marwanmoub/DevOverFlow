@@ -4,6 +4,7 @@ import { AskQuestionSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { ReloadIcon } from "@radix-ui/react-icons";
 import {
   Form,
   FormControl,
@@ -22,6 +23,8 @@ import TagCard from "../cards/TagCard";
 import { useRouter } from "next/navigation";
 import handleError from "@/lib/handlers/error";
 import { createQuestion } from "@/lib/actions/question.action";
+import { toast } from "@/hooks/use-toast";
+import ROUTES from "@/constants/routes";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   // Make sure we turn SSR off
@@ -30,6 +33,7 @@ const Editor = dynamic(() => import("@/components/editor"), {
 
 const QuestionForm = () => {
   const editorRef = useRef<MDXEditorMethods>(null);
+  const [isPending, startTransition] = React.useTransition();
 
   const router = useRouter();
 
@@ -45,13 +49,28 @@ const QuestionForm = () => {
   const handleCreateQuestion = async (
     data: z.infer<typeof AskQuestionSchema>
   ) => {
-    try {
-      await createQuestion(data);
+    startTransition(async () => {
+      try {
+        const result = await createQuestion(data);
 
-      router.push("/");
-    } catch (err) {
-      handleError(err);
-    }
+        if (result.success) {
+          toast({
+            title: "Question Created",
+            description: "Your question has been created successfully.",
+          });
+
+          if (result.data) router.push(ROUTES.QUESTION(result.data._id));
+        } else {
+          toast({
+            title: "Error",
+            description: result.error?.message || "Something went wrong",
+            variant: "destructive",
+          });
+        }
+      } catch (err) {
+        handleError(err);
+      }
+    });
   };
 
   const handleInputKeyDown = (
@@ -195,9 +214,17 @@ const QuestionForm = () => {
         <div className="mt-16 flex justify-end">
           <Button
             type="submit"
+            disabled={isPending}
             className="primary-gradient !text-light-900 w-fit"
           >
-            Ask A Question
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 animate-spin size-4" />
+                <span>Sumitting</span>
+              </>
+            ) : (
+              <>Ask A Question</>
+            )}
           </Button>
         </div>
       </form>

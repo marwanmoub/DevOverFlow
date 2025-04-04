@@ -11,7 +11,7 @@ interface Author {
   image: string;
 }
 
-export interface Question {
+export interface QuestionInterface {
   _id: string;
   title: string;
   tags: Tag[];
@@ -39,3 +39,8 @@ export type APIErrorResponse = NextResponse<ErrorResponse>;
 export type APIResponse<T = null> = NextResponse<
   SuccessResponse<T> | ErrorResponse
 >;
+
+export interface RouteParams {
+  params: Promise<Record<string, string>>;
+  searchParams: Promise<Record<string, string>>;
+}

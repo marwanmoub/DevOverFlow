@@ -1,7 +1,7 @@
 "use server";
 
 import Question from "@/database/question.model";
-import dbConnect from "../mongoose";
+import { QuestionInterface } from "@/types/global";
 import { AskQuestionSchema } from "../validations";
 import handleError from "../handlers/error";
 import { ActionResponse, ErrorResponse } from "@/types/global";
@@ -18,7 +18,7 @@ interface QuestionCreation {
 
 export async function createQuestion(
   questionDetails: QuestionCreation
-): Promise<ActionResponse> {
+): Promise<ActionResponse<QuestionInterface>> {
   const validatedData = await action({
     params: questionDetails,
     schema: AskQuestionSchema,
