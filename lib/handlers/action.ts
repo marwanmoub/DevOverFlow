@@ -2,9 +2,9 @@
 
 import { ZodError, ZodSchema } from "zod";
 import { UnauthorizedError, ValidationError } from "../http-errors";
-import { Session } from "inspector";
 import { auth } from "@/auth";
 import dbConnect from "../mongoose";
+import { Session } from "next-auth";
 
 type ActionOptions<T> = {
   params?: T;
