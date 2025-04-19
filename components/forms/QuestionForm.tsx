@@ -26,7 +26,6 @@ import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { toast } from "@/hooks/use-toast";
 import ROUTES from "@/constants/routes";
 import { QuestionInterface } from "@/types/global";
-import { Params } from "next/dist/server/request/params";
 
 const Editor = dynamic(() => import("@/components/editor"), {
   // Make sure we turn SSR off
