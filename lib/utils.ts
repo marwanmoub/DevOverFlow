@@ -1,14 +1,15 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { date } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 export const getDeviconClassName = (techName: string) => {
   const normalizedTechName = techName.replace(/[ .]/g, "").toLowerCase();
 
-  const techMap: {[key: string]: string} = {
+  const techMap: { [key: string]: string } = {
     // JavaScript variations
     javascript: "devicon-javascript-plain",
     js: "devicon-javascript-plain",
@@ -205,12 +206,15 @@ export const getDeviconClassName = (techName: string) => {
 
     // Three.js
     threejs: "devicon-threejs-original",
-  }
+  };
 
-  return techMap[normalizedTechName] ? `${techMap[normalizedTechName]} colored` : "devicon-devicon-plain";
-}
+  return techMap[normalizedTechName]
+    ? `${techMap[normalizedTechName]} colored`
+    : "devicon-devicon-plain";
+};
 
-export const getTimeStamp = (date: Date) => {
+export const getTimeStamp = (createdAt: Date) => {
+  const date = new Date(createdAt);
   const now = new Date();
   const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
