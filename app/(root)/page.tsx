@@ -68,9 +68,9 @@ const Home = async ({ searchParams }: SearchParams) => {
         error={error}
         data={questions}
         empty={EMPTY_QUESTION}
-        render={(questions) => (
+        render={() => (
           <div className="mt-10 flex w-full flex-col gap-6">
-            {questions.map((question) => (
+            {questions?.map((question) => (
               <QuestionCard key={question._id} question={question} />
             ))}
           </div>

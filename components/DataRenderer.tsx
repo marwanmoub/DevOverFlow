@@ -2,8 +2,6 @@ import { DEFAULT_EMPTY, DEFAULT_ERROR } from "@/constants/states";
 import Image from "next/image";
 import image from "next/image";
 import Link from "next/link";
-import { Props } from "next/script";
-import { title } from "process";
 import React from "react";
 import { Button } from "./ui/button";
 
@@ -22,7 +20,7 @@ interface Props<T> {
       href: string;
     };
   };
-  render: (data: T[]) => React.ReactNode;
+  render: () => React.ReactNode;
 }
 
 interface StateSkeletonProps {
@@ -120,7 +118,7 @@ const DataRenderer = <T,>({
     );
   }
 
-  return <div>{render(data)}</div>;
+  return <div>{render()}</div>;
 };
 
 export default DataRenderer;
